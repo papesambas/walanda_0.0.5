@@ -20,5 +20,23 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\EventListener\nomsEntityListener:
+            tags:
+                - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Noms'}
+                - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Noms'}    # add more service definitions when explicit configuration is needed
+    App\EventListener\prenomsEntityListener:
+            tags:
+                - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Prenoms'}
+                - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Prenoms'}    # add more service definitions when explicit configuration is needed
+    App\EventListener\professionsEntityListener:
+            tags:
+                - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Professions'}
+                - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Professions'}    # add more service definitions when explicit configuration is needed
+    App\EventListener\telephonesEntityListener:
+            tags:
+                - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Telephones'}
+                - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Telephones'}    # add more service definitions when explicit configuration is needed
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
