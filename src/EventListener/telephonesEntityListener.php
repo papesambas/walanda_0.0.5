@@ -21,7 +21,7 @@ class telephonesEntityListener
 
     public function prePersist(Telephones $telephones, LifecycleEventArgs $arg): void
     {
-        $user = $this->security->getUser();
+        /*$user = $this->security->getUser();
         if ($user) {
             $telephones
                 ->setCreatedAt(new \DateTimeImmutable('now'))
@@ -29,12 +29,15 @@ class telephonesEntityListener
                 ->setCreatedBy($user);
         } else {
             throw new LogicException('User cannot be null here ...');
-        }
+        }*/
+        $telephones
+            ->setCreatedAt(new \DateTimeImmutable('now'))
+            ->setSlug($this->getTelephonesSlug($telephones));
     }
 
     public function preUpdate(Telephones $telephones, LifecycleEventArgs $arg): void
     {
-        $user = $this->security->getUser();
+        /*$user = $this->security->getUser();
         if ($user) {
             $telephones
                 ->setCreatedAt(new \DateTimeImmutable('now'))
@@ -42,7 +45,10 @@ class telephonesEntityListener
                 ->setCreatedBy($user);
         } else {
             throw new LogicException('User cannot be null here ...');
-        }
+        }*/
+        $telephones
+            ->setCreatedAt(new \DateTimeImmutable('now'))
+            ->setSlug($this->getTelephonesSlug($telephones));
     }
 
 

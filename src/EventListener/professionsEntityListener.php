@@ -21,7 +21,7 @@ class professionsEntityListener
 
     public function prePersist(Professions $professions, LifecycleEventArgs $arg)
     {
-        $user = $this->security->getUser();
+        /*$user = $this->security->getUser();
         if ($user) {
             $professions
                 ->setCreatedAt(new \DateTimeImmutable('now'))
@@ -29,12 +29,15 @@ class professionsEntityListener
                 ->setCreatedBy($user);
         } else {
             throw new LogicException('User cannot be null here ...');
-        }
+        }*/
+        $professions
+            ->setCreatedAt(new \DateTimeImmutable('now'))
+            ->setSlug($this->getProfessionsSlug($professions));
     }
 
     public function preUpdate(Professions $professions, LifecycleEventArgs $arg)
     {
-        $user = $this->security->getUser();
+        /*$user = $this->security->getUser();
         if ($user) {
             $professions
                 ->setUpdatedAt(new \DateTimeImmutable('now'))
@@ -42,7 +45,10 @@ class professionsEntityListener
                 ->setUpdatedBy($user);
         } else {
             throw new LogicException('User cannot be null here ...');
-        }
+        }*/
+        $professions
+            ->setUpdatedAt(new \DateTimeImmutable('now'))
+            ->setSlug($this->getProfessionsSlug($professions));
     }
 
 

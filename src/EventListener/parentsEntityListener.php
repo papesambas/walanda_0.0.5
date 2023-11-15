@@ -2,46 +2,59 @@
 
 namespace App\EventListener;
 
-use App\Entity\Cercles;
-use App\Entity\Parents;
 use LogicException;
-use App\Entity\Peres;
-use App\Entity\Personnels;
+use App\Entity\Parents;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class parentsEntityListener
 {
-    private $Securty;
-    private $Slugger;
+    private $slugger;
+    private $security;
 
-    public function __construct(Security $security, SluggerInterface $Slugger)
+    public function __construct(SluggerInterface $slugger, Security $security)
     {
-        $this->Securty = $security;
-        $this->Slugger = $Slugger;
+        $this->slugger = $slugger;
+        $this->security = $security;
     }
 
-    public function prePersist(Parents $parents, LifecycleEventArgs $arg): void
+    public function prePersist(Parents $parents, LifecycleEventArgs $arg)
     {
-        /*$user = $this->Securty->getUser();
-        if ($user === null) {
+        /*$user = $this->security->getUser();
+        if ($user) {
+            $parents
+                ->setCreatedAt(new \DateTimeImmutable('now'))
+                ->setSlug($this->getParentsSlug($parents))
+                ->setCreatedBy($user);
+        } else {
             throw new LogicException('User cannot be null here ...');
         }*/
-
-
         $parents
-            ->setCreatedAt(new \DateTimeImmutable('now'));
+            ->setCreatedAt(new \DateTimeImmutable('now'))
+            ->setSlug($this->getParentsSlug($parents));
     }
 
-    public function preUpdate(Parents $parents, LifecycleEventArgs $arg): void
+    public function preUpdate(Parents $parents, LifecycleEventArgs $arg)
     {
-        /*$user = $this->Securty->getUser();
-        if ($user === null) {
+        /*$user = $this->security->getUser();
+        if ($user) {
+            $parents
+                ->setUpdatedAt(new \DateTimeImmutable('now'))
+                ->setSlug($this->getParentsSlug($parents))
+                ->setUpdatedBy($user);
+        } else {
             throw new LogicException('User cannot be null here ...');
         }*/
-
         $parents
-            ->setUpdatedAt(new \DateTimeImmutable('now'));
+            ->setUpdatedAt(new \DateTimeImmutable('now'))
+            ->setSlug($this->getParentsSlug($parents));
+    }
+
+
+    private function getParentsSlug(Parents $parents): string
+    {
+        $slug = mb_strtolower($parents->getPere() . '-' . $parents->getMere() . time() . '-', 'UTF-8');
+        return $this->slugger->slug($slug);
     }
 }

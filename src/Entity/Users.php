@@ -46,6 +46,12 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    public function __toString()
+    {
+        return $this->username;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

@@ -5,13 +5,13 @@ namespace App\Entity;
 use App\Entity\Trait\CreatedAtTrait;
 use App\Entity\Trait\EntityTrackingTrait;
 use App\Entity\Trait\SlugTrait;
-use App\Repository\PeresRepository;
+use App\Repository\MeresRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PeresRepository::class)]
-class Peres
+#[ORM\Entity(repositoryClass: MeresRepository::class)]
+class Meres
 {
     use CreatedAtTrait;
     use SlugTrait;
@@ -21,29 +21,28 @@ class Peres
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'peres')]
+    #[ORM\ManyToOne(inversedBy: 'meres')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Noms $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'peres')]
+    #[ORM\ManyToOne(inversedBy: 'meres')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Prenoms $prenom = null;
 
     #[ORM\Column(length: 255)]
     private ?string $fullname = null;
 
-    #[ORM\ManyToOne(inversedBy: 'peres')]
+    #[ORM\ManyToOne(inversedBy: 'meres')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Professions $profession = null;
 
-    #[ORM\OneToOne(inversedBy: 'pere1', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'mere1', cascade: ['persist', 'remove'])]
     private ?Telephones $telephone1 = null;
 
-    #[ORM\OneToOne(inversedBy: 'pere2', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'mere2', cascade: ['persist', 'remove'])]
     private ?Telephones $telephone2 = null;
 
-    #[ORM\OneToMany(mappedBy: 'pere', targetEntity: Parents::class)]
+    #[ORM\OneToMany(mappedBy: 'mere', targetEntity: Parents::class)]
     private Collection $parents;
 
     public function __construct()
@@ -114,7 +113,7 @@ class Peres
         return $this->telephone1;
     }
 
-    public function setTelephone1(Telephones $telephone1): static
+    public function setTelephone1(?Telephones $telephone1): static
     {
         $this->telephone1 = $telephone1;
 
@@ -145,7 +144,7 @@ class Peres
     {
         if (!$this->parents->contains($parent)) {
             $this->parents->add($parent);
-            $parent->setPere($this);
+            $parent->setMere($this);
         }
 
         return $this;
@@ -155,8 +154,8 @@ class Peres
     {
         if ($this->parents->removeElement($parent)) {
             // set the owning side to null (unless already changed)
-            if ($parent->getPere() === $this) {
-                $parent->setPere(null);
+            if ($parent->getMere() === $this) {
+                $parent->setMere(null);
             }
         }
 

@@ -12,11 +12,7 @@ class PrenomsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('designation')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('slug')
-        ;
+            ->add('designation');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

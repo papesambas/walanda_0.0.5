@@ -10,45 +10,55 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class peresEntityListener
 {
-    private $Securty;
-    private $Slugger;
+    private $slugger;
+    private $security;
 
-    public function __construct(Security $security, SluggerInterface $Slugger)
+    public function __construct(SluggerInterface $slugger, Security $security)
     {
-        $this->Securty = $security;
-        $this->Slugger = $Slugger;
+        $this->slugger = $slugger;
+        $this->security = $security;
     }
 
-    public function prePersist(Peres $peres, LifecycleEventArgs $arg): void
+    public function prePersist(Peres $peres, LifecycleEventArgs $arg)
     {
-        /*$user = $this->Securty->getUser();
-        if ($user === null) {
+        /*$user = $this->security->getUser();
+        if ($user) {
+            $peres
+                ->setCreatedAt(new \DateTimeImmutable('now'))
+                ->setSlug($this->getPeresSlug($peres))
+                ->setFullName($peres->getNom() . ' ' . $peres->getPrenom())
+                ->setCreatedBy($user);
+        } else {
             throw new LogicException('User cannot be null here ...');
         }*/
-
-
         $peres
             ->setCreatedAt(new \DateTimeImmutable('now'))
-            ->setFullName($peres->getNom() . ' ' . $peres->getPrenom())
-            ->setSlug($this->getPeresSlug($peres));
+            ->setSlug($this->getPeresSlug($peres))
+            ->setFullName($peres->getNom() . ' ' . $peres->getPrenom());
     }
 
-    public function preUpdate(Peres $peres, LifecycleEventArgs $arg): void
+    public function preUpdate(Peres $peres, LifecycleEventArgs $arg)
     {
-        /*$user = $this->Securty->getUser();
-        if ($user === null) {
+        /*$user = $this->security->getUser();
+        if ($user) {
+            $peres
+                ->setUpdatedAt(new \DateTimeImmutable('now'))
+                ->setSlug($this->getPeresSlug($peres))
+                ->setFullName($peres->getNom() . ' ' . $peres->getPrenom())
+                ->setUpdatedBy($user);
+        } else {
             throw new LogicException('User cannot be null here ...');
         }*/
-
         $peres
             ->setUpdatedAt(new \DateTimeImmutable('now'))
-            ->setFullName($peres->getNom() . ' ' . $peres->getPrenom())
-            ->setSlug($this->getPeresSlug($peres));
+            ->setSlug($this->getPeresSlug($peres))
+            ->setFullName($peres->getNom() . ' ' . $peres->getPrenom());
     }
+
 
     private function getPeresSlug(Peres $peres): string
     {
-        $slug = mb_strtolower($peres->getFullName() . '-' . $peres->getId(), 'UTF-8');
-        return $this->Slugger->slug($slug);
+        $slug = mb_strtolower($peres->getFullname() . '-' . time() . '-', 'UTF-8');
+        return $this->slugger->slug($slug);
     }
 }

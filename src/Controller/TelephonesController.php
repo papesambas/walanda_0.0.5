@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Telephones;
+use App\Repository\TelephonesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,14 +24,18 @@ class TelephonesController extends AbstractController
     }
 
     #[Route("/ajout/ajax/{label}", name: 'app_prenoms_ajout_ajax', methods: ['POST'])]
-    public function ajoutAjax(string $label, Request $request, EntityManagerInterface $entityManager): Response
+    public function ajoutAjax(string $label, Request $request, TelephonesRepository $telephonesRepository, EntityManagerInterface $entityManager): Response
     {
-        $telephone = new Telephones();
-        $telephone->setNumero(trim(strip_tags($label)));
-        $entityManager->persist($telephone);
-        $entityManager->flush();
-        //on récupère l'Id qui a été créé
-        $id = $telephone->getId();
+        $telephones = $telephonesRepository->findOneBy(['numero' => $label]);
+        if (!$telephones) {
+
+            $telephone = new Telephones();
+            $telephone->setNumero(trim(strip_tags($label)));
+            $entityManager->persist($telephone);
+            $entityManager->flush();
+            //on récupère l'Id qui a été créé
+            $id = $telephone->getId();
+        }
 
         return new JsonResponse(['id' => $id]);
     }
