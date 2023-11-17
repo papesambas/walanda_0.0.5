@@ -12,7 +12,7 @@ function select2Function() {
         if (label.length && $.inArray(label.val(), $(this).val() !== -1)) {
             //on ajoute le label à notre base de donnée
             $.ajax({
-                url: "/noms/ajout/ajax/" + label.val(),
+                url: "/noms/ajout/ajax/" + encodeURIComponent(label.val()),
                 type: "POST",
             }).done(function (data) {
                 //pour l'ajout en ajax on crée un controlleur

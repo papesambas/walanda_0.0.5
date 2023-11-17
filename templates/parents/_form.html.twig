@@ -1,4 +1,35 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<section class="container">
+    <div class="row">
+        <div class="col-6">
+            <h5 class="fst-italic text-center">Informations du père</h5>
+            <div class="row border rounded-3 border-black rounded py-4">
+                {% if app.request.attributes.get('_route')== 'app_parents_new' %}
+                    <div class="col-8 mt-2 bg-warning">{{ form_widget(form.SearchPere) }}</div>
+                {% endif %}
+                <div class="col-6 mt-2">{{ form_widget(form.pere.nom) }}</div>
+                <div class="col-6 mt-2">{{ form_widget(form.pere.prenom) }}</div>
+                <div class="col-8 mt-2">{{ form_widget(form.pere.profession) }}</div>
+                <div class="col-6 mt-2">{{ form_widget(form.pere.telephone1) }}</div>
+                <div class="col-6 mt-2">{{ form_widget(form.pere.telephone2) }}</div>
+            </div>
+        </div>
+        {#<div class="col-2"></div>#}
+        <div class="col-6">
+            <h5 class="fst-italic text-center">Informations de la mère</h5>
+            <div class="row border rounded border-dark py-4">
+                {% if app.request.attributes.get('_route')== 'app_parents_new' %}
+                    <div class="col-8 mt-2 bg-warning">{{ form_widget(form.SearchMere) }}</div>
+                {% endif %}
+                <div class="col-6 mt-2">{{ form_widget(form.mere.nom) }}</div>
+                <div class="col-6 mt-2">{{ form_widget(form.mere.prenom) }}</div>
+                <div class="col-8 mt-2">{{ form_widget(form.mere.profession) }}</div>
+                <div class="col-6 mt-2">{{ form_widget(form.mere.telephone1) }}</div>
+                <div class="col-6 mt-2">{{ form_widget(form.mere.telephone2) }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+    {#{{ form_widget(form) }}#}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

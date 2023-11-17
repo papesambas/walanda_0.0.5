@@ -59,7 +59,7 @@ class PeresController extends AbstractController
                 'telephone2' => $telephone2,
             ]);
         } elseif ($pere == null && $mere !== null && $telephone !== null) {
-            $pereId = $mere->getId() ? $mere->getId() : null;
+            $mereId = $mere->getId() ? $mere->getId() : null;
             $nomId = $mere->getNom() ? $mere->getNom()->getId() : null;
             $prenomId = $mere->getPrenom() ? $mere->getPrenom()->getId() : null;
             $professionId = $mere->getProfession() ? $mere->getProfession()->getId() : null;
@@ -76,7 +76,7 @@ class PeresController extends AbstractController
             $this->addFlash('danger', 'Le téléphone sollicité pour un père, est déjà associé à une mère');
             $response = new JsonResponse([
                 'errorTel' => 'Le téléphone sollicité pour un père, est déjà associé à une mère',
-                'pereId' => $pereId,
+                'pereId' => $mereId,
                 'nomId' => $nomId,
                 'prenomId' => $prenomId,
                 'professionId' => $professionId,

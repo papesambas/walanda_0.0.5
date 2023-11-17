@@ -11,9 +11,10 @@ function select2Function() {
         if (label.length && $.inArray(label.val(), $(this).val() !== -1)) {
             //on ajoute le label à notre base de donnée
             $.ajax({
-                url: "/prenoms/ajout/ajax/" + label.val(),
+                url: "/prenoms/ajout/ajax/" + encodeURIComponent(label.val()),
                 type: "POST",
             }).done(function (data) {
+                console.log(data)
                 //pour l'ajout en ajax on crée un controlleur
                 label.replaceWith(`<option selected value="${data.id}">${label.val()}</option>`);
             })

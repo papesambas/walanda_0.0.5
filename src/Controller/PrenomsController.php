@@ -83,6 +83,7 @@ class PrenomsController extends AbstractController
     #[Route("/ajout/ajax/{label}", name: 'app_prenoms_ajout_ajax', methods: ['POST'])]
     public function ajoutAjax(string $label, Request $request, EntityManagerInterface $entityManager): Response
     {
+
         $prenom = new Prenoms();
         $prenom->setDesignation(ucwords(trim(strip_tags($label))));
         $entityManager->persist($prenom);

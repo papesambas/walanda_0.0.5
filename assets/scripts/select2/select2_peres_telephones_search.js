@@ -87,9 +87,14 @@ function select2Function() {
                         }
                     }
                     if (data.errorTel) {
-                        setTimeout(function () {
-                            location.reload();
-                        }, 200);
+                        alert(data.errorTel);
+                        $('#parents_recherche_SearchPere').select2('destroy').val("").select2();//.empty().append($('<option></option>').attr('value', data.nomId).text(data.nom));
+                        $('#parents_recherche_pere_nom').select2('destroy').val("").select2();//.empty().append($('<option></option>').attr('value', data.nomId).text(data.nom));
+                        $('#parents_recherche_pere_prenom').select2('destroy').val("").select2();//.empty().append($('<option></option>').attr('value', data.prenomId).text(data.prenom));
+                        $('#parents_recherche_pere_profession').select2('destroy').val("").select2();//.empty().append($('<option></option>').attr('value', data.professionId).text(data.profession));
+                        $('#parents_recherche_pere_telephone1').select2('destroy').val("").select2();//.empty().append($('<option></option>').attr('value', data.professionId).text(data.telephone1));
+                        $('#parents_recherche_pere_telephone2').select2('destroy').val("").select2();//.empty().append($('<option></option>').attr('value', data.ninaId).text(data.telephone2));
+
                     }
                     if (data.errorTele) {
                         alert(data.errorTele);

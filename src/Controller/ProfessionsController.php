@@ -22,7 +22,7 @@ class ProfessionsController extends AbstractController
         ]);
     }
 
-    #[Route("/ajout/ajax/{label}", name: 'app_prenoms_ajout_ajax', methods: ['POST'])]
+    #[Route("/ajout/ajax/{label}", name: 'app_professions_ajout_ajax', methods: ['POST'])]
     public function ajoutAjax(string $label, Request $request, EntityManagerInterface $entityManager): Response
     {
         $profession = new Professions();

@@ -23,7 +23,7 @@ class TelephonesController extends AbstractController
         ]);
     }
 
-    #[Route("/ajout/ajax/{label}", name: 'app_prenoms_ajout_ajax', methods: ['POST'])]
+    #[Route("/ajout/ajax/{label}", name: 'app_telephones_ajout_ajax', methods: ['POST'])]
     public function ajoutAjax(string $label, Request $request, TelephonesRepository $telephonesRepository, EntityManagerInterface $entityManager): Response
     {
         $telephones = $telephonesRepository->findOneBy(['numero' => $label]);

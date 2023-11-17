@@ -12,7 +12,7 @@ function select2Function() {
         if (label.length && label.val().length >= 12 && $.inArray(label.val(), $(this).val() !== -1)) {
             // Effectuer la requête AJAX pour ajouter le nouveau numéro de téléphone à la base de données
             $.ajax({
-                url: "/telephones/ajout/ajax/" + label.val(),
+                url: "/telephones/ajout/ajax/" + encodeURIComponent(label.val()),
                 type: "POST",
             }).done(function (data) {
                 // Pour l'ajout en AJAX, on crée un contrôleur
